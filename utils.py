@@ -43,6 +43,29 @@ def get_classification_dataset2() -> Tuple[np.ndarray, np.ndarray]:
     return X, y
 
 
+def get_classification_dataset3(
+        n: int = 200,
+        noise: float = 0.3
+) -> Tuple[np.ndarray, np.ndarray]:
+    '''
+    Noisy version of get_classification_dataset2: the label is decided by the
+    radius *plus Gaussian noise*, so the two classes overlap near the unit
+    circle and no kernel should separate the training set perfectly.
+
+    Args:
+        n: number of points
+        noise: std of the noise added to the radius before thresholding at 1
+
+    Returns:
+        X: the dataset
+        y: the labels (1 outside, 0 inside)
+    '''
+    X = np.random.randn(n, 2)
+    r = np.sqrt(np.sum(X ** 2, axis=1)) + noise * np.random.randn(n)
+    y = (r > 1).astype(float)
+    return X, y
+
+
 def plot_classification_datapoints(
         X: np.ndarray,
         y: np.ndarray,
@@ -83,6 +106,7 @@ def plot_decision_boundary(
         cmap: str = 'Paired_r',
         margin: bool = False,
         support_vectors: Optional[np.ndarray] = None,
+        save_path: Optional[str] = None,
 ) -> None:
     '''
     Plot decision boundary of a classification model.
@@ -95,6 +119,7 @@ def plot_decision_boundary(
         cmap: colormap
         margin: if True, also shade the margin band -1 < f(x) < 1
         support_vectors: if given, circle these points
+        save_path: if given, also save the figure there
     '''
     h = 0.02
     x_min, x_max = X[:, 0].min() - 10 * h, X[:, 0].max() + 10 * h
@@ -121,6 +146,8 @@ def plot_decision_boundary(
                     facecolors='none', edgecolors='k', label='support vectors')
         plt.legend()
     plt.title('%s decision boundary' % partition)
+    if save_path is not None:
+        plt.savefig(save_path, dpi=100, bbox_inches='tight')
     plt.show()
 
 

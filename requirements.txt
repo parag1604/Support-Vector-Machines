@@ -1,3 +1,4 @@
 numpy
 matplotlib
 cvxopt
+scikit-learn  # optional: only for version5 --compare
