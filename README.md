@@ -29,7 +29,7 @@ pip install -r requirements.txt
 
 ## Data
 
-No dataset is needed. `utils.py` generates small synthetic 2-D datasets (two Gaussian blobs, and points inside/outside the unit circle), splits them into train and test sets, and plots decision boundaries.
+`utils.py` generates small synthetic 2-D datasets (two Gaussian blobs, and points inside/outside the unit circle), splits them into train and test sets, and plots decision boundaries.
 
 All versions use labels $y_i \in \{-1, +1\}$ and solve problems of the form `cvxopt.solvers.qp(P, q, G, h, A, b)`:
 
